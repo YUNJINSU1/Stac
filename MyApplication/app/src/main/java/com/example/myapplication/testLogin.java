@@ -1,15 +1,12 @@
 package com.example.myapplication;
 
-import android.util.Log;
-
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class test {
-
-    private static final String SERVER_URL = "http://10.26.143.75:80/Auth/register"; // 실제 서버 URL로 변경해야 합니다.
+public class testLogin {
+    private static final String SERVER_URL = "http://10.26.143.75:80/Auth/lolgin"; // 실제 서버 URL로 변경해야 합니다.
     public void sendPostRequest() {
         try {
             // 서버 URL 생성
@@ -22,7 +19,7 @@ public class test {
             conn.setDoOutput(true);
 
             // 요청 바디 데이터 작성
-            String jsonInputString = "{ \"email\": \"yunjinsu2008@gmail.com\", \"name\": \"yunjinsu1\", \"password\": \"1234\" , \"nickName\": \"윤진수\" }";
+            String jsonInputString = "{  \"name\": \"yunjinsu\", \"password\": \"1234\" }";
 
             // 요청 바디 데이터를 OutputStream을 사용해 전송
             try (OutputStream os = conn.getOutputStream()) {

@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }else if(v.getId()==R.id.check){
             tryOutContact();
+        }else if(v.getId()==R.id.test){
+            startActivity(new Intent(this,MainLoginActivity.class));
         }
     }
     static final int PERMISSION_GROUP=3;

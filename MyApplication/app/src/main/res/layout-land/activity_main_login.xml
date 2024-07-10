@@ -8,6 +8,7 @@
                 android:id="@+id/start" android:onClick="mOnClick" android:text="Start Mpa Activity"/>
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/check" android:onClick="mOnClick" android:text="Check Permission"/>
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:id="@+id/test" android:onClick="mOnClick" android:text="로그인 회원가입"/>
+        <com.google.android.gms.maps.MapView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/mapView"/>
 </LinearLayout>
