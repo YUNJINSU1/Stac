@@ -3,8 +3,11 @@ package com.example.myapplication;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
@@ -17,7 +20,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         intent=new Intent(this,MapsActivity.class);
+
+
+        thread2.start();
     }
+    Thread thread2=new Thread(){
+        public void run(){
+            test1.sendPostRequest();
+        }
+    };
+    test test1 = new test();
     public void mOnClick(View v){
         if(v.getId()==R.id.start){
             startActivity(intent);
