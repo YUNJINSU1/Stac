@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/sub_id" android:onClick="mOnClick" android:text="id"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/sub_ps" android:onClick="mOnClick" android:text="password"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/sub_name" android:onClick="mOnClick" android:text="name"/>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/sub_email" android:onClick="mOnClick" android:text="email"/>
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:id="@+id/sub_btn" android:onClick="mOnClick" android:text="submit"/>
+
+</LinearLayout>
