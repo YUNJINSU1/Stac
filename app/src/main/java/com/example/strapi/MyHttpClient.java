@@ -1,9 +1,9 @@
 package com.example.strapi;
 
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class MyHttpClient extends Thread implements Serializable {
@@ -19,26 +19,25 @@ public class MyHttpClient extends Thread implements Serializable {
 
     public void run() {
         try {
-            // 쿼리 문자열 작성
-            String query = "Email=" + URLEncoder.encode(mail, StandardCharsets.UTF_8.name()) +
-                    "&Name=" + URLEncoder.encode(id, StandardCharsets.UTF_8.name()) +
-                    "&Nickname=" + URLEncoder.encode(name, StandardCharsets.UTF_8.name()) +
-                    "&Password=" + URLEncoder.encode(ps, StandardCharsets.UTF_8.name());
+            // JSON 문자열 작성
+            String jsonInputString = String.format("{\"email\": \"%s\", \"name\": \"%s\", \"nickname\": \"%s\", \"password\": \"%s\"}",
+                    mail, id, name, ps);
 
-            // 서버 URL 생성 (쿼리 문자열을 포함)
-            URL url = new URL(SERVER_URL + "?" + query);
+            // 서버 URL 생성
+            URL url = new URL(SERVER_URL);
 
             // HttpURLConnection 객체 생성 및 설정
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Accept", "text/plain");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            // 요청 바디는 비워두기
-            // try (OutputStream os = conn.getOutputStream()) {
-            //     byte[] input = query.getBytes(StandardCharsets.UTF_8);
-            //     os.write(input, 0, input.length);
-            // }
+            // 요청 바디에 JSON 문자열 작성
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
 
             // 응답 코드 확인
             int responseCode = conn.getResponseCode();
