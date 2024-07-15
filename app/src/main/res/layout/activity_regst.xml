@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <EditText
+            android:layout_width="370dp"
+            android:layout_height="70dp"
+            android:id="@+id/sub_id"
+            android:onClick="mOnClick"
+            android:text=""
+            android:hint="아이디를 입력하세요"
+            tools:layout_editor_absoluteY="208dp"
+            tools:layout_editor_absoluteX="69dp"/>
+    <EditText
+            android:layout_width="370dp"
+            android:layout_height="70dp"
+            android:id="@+id/sub_ps"
+            android:onClick="mOnClick"
+            android:text=""
+            android:hint="비밀번호를 입력하세요"
+            tools:layout_editor_absoluteY="355dp"
+            tools:layout_editor_absoluteX="65dp"/>
+
+    <android.widget.Button
+            android:onClick="mOnClick"
+            android:id="@+id/sub_btn"
+            android:layout_width="211dp"
+            android:layout_height="53dp"
+            android:text="로그인"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_background2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="558dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

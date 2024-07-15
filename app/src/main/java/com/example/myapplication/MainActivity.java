@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.View;
@@ -14,10 +16,19 @@ import com.example.strapi.MyHttpClient;
 import com.example.strapi.StrContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
     Intent intent;
     StrContext vertex;
+    List<String> perms=new ArrayList<>(Arrays.asList(new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+    }));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if(v.getId()==R.id.start){
             startActivity(new Intent(this,MapsActivity.class));
         }else if(v.getId()==R.id.check){
-            tryOutContact();
+            tryOutContact(perms);
         }else if(v.getId()==R.id.test){
             Intent intent1=new Intent(this,TestQuery.class);
             intent1.putExtra("context",vertex);
@@ -59,9 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     static final int PERMISSION_GROUP=3;
-    void tryOutContact(){
-        checkForPermission(Manifest.permission.ACCESS_FINE_LOCATION,PERMISSION_GROUP);
-    }
     private void checkForPermission(String permission, int requestCode) {
         if (ContextCompat.checkSelfPermission(this, permission)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -76,6 +84,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
+            case 0:
+                if(grantResults.length>0){
+                    String msg="denied permission list:\n";
+                    for(int i=0;i<grantResults.length;i++){
+                        if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
+                            msg+=permissions[i]+"\n";
+                        }
+                    }
+                }
+                break;
             case 1:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //permission with request code 1 granted
@@ -87,6 +105,33 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+    public void tryOutContact(List<String>perm){
+        AtomicBoolean show= new AtomicBoolean(false);
+        List<String>result=new ArrayList<>();
+        perm.forEach(item->{
+            if(ContextCompat.checkSelfPermission(this,item)==PackageManager.PERMISSION_DENIED){
+                if(shouldShowRequestPermissionRationale(item)){
+                    show.set(true);
+                    result.add(item);
+                }else{
+                    result.add(item);
+                }
+            }
+        });
+        if(!result.isEmpty()){
+            if(show.get()){
+                new AlertDialog.Builder(this).setTitle("permission").setMessage(perm.toArray().toString())
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                requestPermissions(result.toArray(new String[result.size()]),0);
+                            }
+                        }).setNegativeButton("no",null).show();
+            }else{
+                requestPermissions(result.toArray(new String[result.size()]),0);
+            }
         }
     }
 }

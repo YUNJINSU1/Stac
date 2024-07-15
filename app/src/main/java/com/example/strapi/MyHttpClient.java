@@ -1,5 +1,7 @@
 package com.example.strapi;
 
+import com.example.ServerUrl;
+
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
@@ -7,7 +9,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class MyHttpClient extends Thread implements Serializable {
-    private final String SERVER_URL = "http://10.26.143.75:80/Auth/register"; // 실제 서버 URL로 변경해야 합니다.
+
+    private final String SERVER_URL = ServerUrl.url+"/Auth/register"; // 실제 서버 URL로 변경해야 합니다.
     private String mail, id, ps, name;
 
     public void postFormat(String email, String id, String ps, String name) {
